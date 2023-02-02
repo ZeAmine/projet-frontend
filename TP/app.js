@@ -4,20 +4,21 @@ export default class App {
       input: document.querySelector(".post"),
       submit: document.querySelector(".submitPost"),
       message: document.querySelector(".message"),
+      select: document.querySelector(".user_select"),
+      posts: document.querySelector(".content_posts"),
     };
+
+    this.value = "0";
+    this.dataArray = [];
+    this.posts = [];
 
     this.init();
     this.bindEvents();
-    this.getData();
   }
 
   init() {
     this.getData();
-  }
-
-  bindEvents() {
-    this.dom.submit.addEventListener("click", this.onClick.bind(this));
-    // this.dom.input.addEventListener("input", this.eventInput.bind(this));
+    // this.getPostByUser();
   }
 
   getData() {
@@ -27,27 +28,42 @@ export default class App {
   }
 
   displayData(data) {
-    data.map((element) => {
-      this.dom.message.innerHTML = element.title;
-    });
+    this.dataArray = data;
+  }
+
+  bindEvents() {
+    this.dom.submit.addEventListener("click", this.onClick.bind(this));
   }
 
   onClick() {
-    const value = this.dom.input.value;
-    this.dom.message.innerHTML = value;
+    this.value = this.dom.input.value;
+
+    this.dom.posts.innerHTML = "";
+    this.displayPost(this.value);
+  }
+
+  displayPost(value) {
+    for (let i = 0; i < parseInt(value); i++) {
+      this.posts[i] = this.dataArray[i];
+    }
+
+    this.posts.map((element) => {
+      const p = document.createElement("p");
+      p.innerHTML = element.title;
+      this.dom.posts.appendChild(p);
+    });
   }
 }
 
 new App();
 
-// // 1.
-// let value = "";
-
-// function eventInput(event) {}
-
-// elInput.addEventListener("input", eventInput);
-
-// // 2.
-// function onClick(event) {}
-
-// elSubmit.addEventListener("click", onClick);
+// data.map((element) => {
+//   const option = document.createElement("option");
+//   option.innerHTML = element.name;
+//   option.value = element.id;
+//   this.dom.select.appendChild(option);
+// });
+// const options = Array.from(document.querySelectorAll("option"));
+// options.forEach((element) => {
+//   element.addEventListener("mouseenter", (e) => console.log(element.value));
+// });
