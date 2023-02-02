@@ -67,6 +67,8 @@ export default class App {
         this.posts[i] = this.dataArray[i];
       }
     } else {
+      this.titlePosts = [];
+
       for (let i = 0; i < parseInt(value); i++) {
         this.posts[i] = this.dataArray[i];
       }
