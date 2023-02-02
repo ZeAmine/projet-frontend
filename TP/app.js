@@ -22,7 +22,6 @@ export default class App {
 
   init() {
     this.getData();
-    // this.getPostByUser();
   }
 
   getData() {
@@ -104,14 +103,3 @@ export default class App {
 }
 
 new App();
-
-// data.map((element) => {
-//   const option = document.createElement("option");
-//   option.innerHTML = element.name;
-//   option.value = element.id;
-//   this.dom.select.appendChild(option);
-// });
-// const options = Array.from(document.querySelectorAll("option"));
-// options.forEach((element) => {
-//   element.addEventListener("mouseenter", (e) => console.log(element.value));
-// });
