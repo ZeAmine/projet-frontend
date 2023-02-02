@@ -1,0 +1,20 @@
+html {
+  font-family: sans-serif;
+}
+
+body {
+  width: 50%;
+  max-width: 800px;
+  min-width: 480px;
+  margin: 0 auto;
+}
+
+.result {
+  color: palevioletred;
+  padding: 3px;
+}
+
+.warning {
+  color: purple;
+  padding: 3px;
+}
