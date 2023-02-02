@@ -42,13 +42,64 @@ export default class App {
   bindEvents() {
     this.btnEncode.addEventListener("click", () => {
       console.log("encode");
-      this.isCesar = true;
+      this.isCesar = true; 
+      this.posts.innerHTML = ``;
+      this.comments.innerHTML = ``;
+      let averageCommentPerPost = 0;
+      while (this.posts.firstChild) {
+        this.posts.removeChild(this.posts.firstChild);
+      }
+      while (this.comments.firstChild) {
+        this.comments.removeChild(this.posts.firstChild);
+      }
+      this.postsData.forEach(async (post) => {
+        this.posts.innerHTML += `<p>${this.cesar(1,post.title)}</p>`;
+        this.comments.innerHTML += `-----------------------------`;
+        this.comments.innerHTML += `<p> Post title : ${this.cesar(1,post.title)}</p>`;
+  
+        this.commentsData.forEach((comment) => {
+          if (comment.postId !== post.id) return;
+          averageCommentPerPost++;
+          this.comments.innerHTML += `<p>${this.cesar(1,comment.body)}</p>`;
+        });
+        this.comments.innerHTML += `<p> Average comment per post : ${
+          averageCommentPerPost / this.postsData.length
+        }</p>`;
+      });
     });
+    
     this.btnDecode.addEventListener("click", () => {
       console.log("decode");
+      if(this.isCesar){
       this.isCesar = false;
+      this.posts.innerHTML = ``;
+      this.comments.innerHTML = ``;
+      let averageCommentPerPost = 0;
+      while (this.posts.firstChild) {
+        this.posts.removeChild(this.posts.firstChild);
+      }
+      while (this.comments.firstChild) {
+        this.comments.removeChild(this.posts.firstChild);
+      }
+      
+      this.postsData.forEach(async (post) => {
+        this.posts.innerHTML += `<p>${post.title}</p>`;
+        this.comments.innerHTML += `-----------------------------`;
+        this.comments.innerHTML += `<p> Post title : ${post.title}</p>`;
+  
+        this.commentsData.forEach((comment) => {
+          if (comment.postId !== post.id) return;
+          averageCommentPerPost++;
+          this.comments.innerHTML += `<p>${comment.body}</p>`;
+        });
+        this.comments.innerHTML += `<p> Average comment per post : ${
+          averageCommentPerPost / this.postsData.length
+        }</p>`;
+      });
+    }
     });
   }
+  
 
   async displayUser() {
     this.users = await fetch("https://jsonplaceholder.typicode.com/users").then(
@@ -64,9 +115,12 @@ export default class App {
   }
 
   async displayUserPostAndComments(userId) {
+    console.log(userId);
     this.postsData = await fetch(
       `https://jsonplaceholder.typicode.com/posts?userId=${userId}`
     ).then((response) => response.json());
+    console.log("test",this.isCesar)
+   
     this.commentsData = await fetch(
       `https://jsonplaceholder.typicode.com/comments`
     ).then((response) => response.json());
